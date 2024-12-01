@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlined Blue Animated Digital Clock</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+        }
+
+        .clock-container {
+            padding: 2vw;
+            border: 5px solid rgba(0, 255, 255, 0.6); /* 輝き抑えめのネオン風枠 */
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), 0 0 25px rgba(0, 255, 255, 0.3); /* 輝きを抑えめに */
+            background: rgba(0, 0, 0, 0.8); /* くっきりとした背景 */
+            text-align: center;
+        }
+
+        .clock {
+            font-size: 8vw;
+            display: flex;
+            gap: 0.2em;
+            color: #0ff;
+        }
+
+        .digit, .colon {
+            animation: glow 1.5s ease-in-out infinite alternate, colorShift 4s ease-in-out infinite alternate;
+            opacity: 1;
+            position: relative;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* 輪郭の強調 */
+        .digit {
+            text-shadow: 0 0 8px #fff, 0 0 20px #fff, 0 0 30px #00c4cc, 0 0 40px #00c4cc;
+        }
+
+        .colon {
+            animation: blink 1s infinite steps(1), glow 1.5s ease-in-out infinite alternate, colorShift 4s ease-in-out infinite alternate;
+            color: #00c4cc; /* コロンの色 */
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 8px #fff, 0 0 20px #fff, 0 0 30px #00c4cc;
+                color: #0ff; /* 初期のシアン */
+            }
+            50% {
+                text-shadow: 0 0 12px #00c4cc, 0 0 24px #00c4cc;
+                color: #00c4cc; /* ターコイズ */
+            }
+            100% {
+                text-shadow: 0 0 8px #fff, 0 0 20px #fff, 0 0 30px #00c4cc;
+                color: #0ff; /* シアン */
+            }
+        }
+
+        @keyframes colorShift {
+            0% {
+                color: #0ff; /* シアン */
+            }
+            25% {
+                color: #00c4cc; /* ターコイズ */
+            }
+            50% {
+                color: #1e90ff; /* ドジャーブルー */
+            }
+            75% {
+                color: #4682b4; /* スチールブルー */
+            }
+            100% {
+                color: #0ff; /* シアン */
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .clock {
+                font-size: 15vw;
+            }
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
+
+        setInterval(updateTime, 1000);
+        window.onload = updateTime;
+    </script>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="clock">
+            <span id="hours" class="digit">00</span>
+            <span class="colon">:</span>
+            <span id="minutes" class="digit">00</span>
+        </div>
+    </div>
+</body>
+</html>

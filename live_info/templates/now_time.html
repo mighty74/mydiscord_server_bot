@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Clock with Images</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .clock {
+            display: flex;
+            align-items: center;
+        }
+        .digit, .colon {
+            width: 50px;
+            height: 100px;
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            updateClock('hour1', hours[0]);
+            updateClock('hour2', hours[1]);
+            updateClock('minute1', minutes[0]);
+            updateClock('minute2', minutes[1]);
+            updateClock('second1', seconds[0]);
+            updateClock('second2', seconds[1]);
+        }
+
+        function updateClock(id, digit) {
+            document.getElementById(id).src = `/static/${digit}.png`;
+        }
+
+        setInterval(updateTime, 1000);
+    </script>
+</head>
+<body onload="updateTime()">
+    <div class="clock">
+        <img id="hour1" class="digit" src="">
+        <img id="hour2" class="digit" src="">
+        <img class="colon" src="/static/ten.png">
+        <img id="minute1" class="digit" src="">
+        <img id="minute2" class="digit" src="">
+        <img class="colon" src="/static/ten.png">
+        <img id="second1" class="digit" src="">
+        <img id="second2" class="digit" src="">
+    </div>
+</body>
+</html>
