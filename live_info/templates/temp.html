@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        audio {
+            width: 300px;
+            margin-top: 20px;
+        }
+        select {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Music Player</h1>
+    <audio id="audioPlayer" controls></audio>
+    <select id="trackOrder" multiple>
+        {% for track in tracks %}
+        <option value="{{ track }}">{{ track }}</option>
+        {% endfor %}
+    </select>
+    <button onclick="startPlayback()">Play Selected Order</button>
+
+    <script>
+        const audioPlayer = document.getElementById('audioPlayer');
+        const trackOrder = document.getElementById('trackOrder');
+        let currentTrack = 0;
+        let selectedTracks = [];
+
+        function playTrack(index) {
+            if (index >= selectedTracks.length) {
+                index = 0; // Loop back to the first track
+            }
+            audioPlayer.src = `/music/${selectedTracks[index]}`;
+            audioPlayer.play();
+            currentTrack = index;
+        }
+
+        audioPlayer.addEventListener('ended', () => {
+            playTrack(currentTrack + 1);
+        });
+
+        function startPlayback() {
+            selectedTracks = Array.from(trackOrder.selectedOptions).map(option => option.value);
+            if (selectedTracks.length > 0) {
+                playTrack(0);
+            }
+        }
+    </script>
+</body>
+</html>
